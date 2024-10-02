@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+struct Employee {
+    char name[50];
+    float salary;
+    int duration;
+};
+
+int main() {
+    struct Employee employees[100];
+    int count = 0;
+    char choice;
+
+    // รับข้อมูลพนักงาน
+    do {
+        printf("Do you want to Enter Employee Information? (y/n): ");
+        scanf(" %c", &choice);
+
+        if (choice == 'y' || choice == 'Y') {
+            printf("----\n");
+            printf("Employee Name: ");
+            scanf(" %[^\n]", employees[count].name);
+            printf("Salary (Bath/Month): ");
+            scanf("%f", &employees[count].salary);
+            printf("Duration (Year): ");
+            scanf("%d", &employees[count].duration);
+            count++;
+        }
+    } while (choice == 'y' || choice == 'Y');
+
+    // คำนวณเงินเดือนเฉลี่ยและเงินเดือนรวม
+    float totalSalary = 0.0;
+    for (int i = 0; i < count; i++) {
+        totalSalary += employees[i].salary;
+    }
+
+    float averageSalary = totalSalary / count;
+
+    // หาคนที่มีอายุงานมากที่สุด
+    int maxDurationIndex = 0;
+    for (int i = 1; i < count; i++) {
+        if (employees[i].duration > employees[maxDurationIndex].duration) {
+            maxDurationIndex = i;
+        }
+    }
+
+    // แสดงผลลัพธ์
+    printf("Average of Salary: %.2f Bath\n", averageSalary);
+    printf("Payment of every month: %.2f Bath\n", totalSalary);
+    printf("----------------------------------------\n");
+    printf("** Most duration in this business **\n");
+    printf("Name: %s (%d Years)\n", employees[maxDurationIndex].name, employees[maxDurationIndex].duration);
+    printf("Salary: %.2f Bath\n", employees[maxDurationIndex].salary);
+
+    return 0;
+}
