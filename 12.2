@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+struct Student {
+    char Name[20];
+    float Score;
+};
+
+int main() {
+    struct Student students[4];
+
+    // รับข้อมูลของนักเรียน 4 คน
+    for (int i = 0; i < 4; i++) {
+        printf("Student %c\n", 'A' + i); // แสดงตัวอักษร A, B, C, D
+        printf("Name: ");
+        scanf(" %[^\n]", students[i].Name); // อ่านชื่อที่มีช่องว่าง
+        printf("Score: ");
+        scanf("%f", &students[i].Score);
+    }
+
+    // แสดงผลชื่อของนักเรียน
+    for (int i = 3; i >= 0; i--) {
+        printf("%s ", students[i].Name);
+    }
+    printf("\n");
+
+    // แสดงผลคะแนนของนักเรียน
+    for (int i = 3; i >= 0; i--) {
+        printf("%.2f ", students[i].Score);
+    }
+    printf("\n");
+
+    return 0;
+}
