@@ -1,0 +1,101 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_STUDENTS 100
+
+struct Student {
+    char name[30];
+    float height;
+};
+
+void sortStudents(struct Student students[], int count) {
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = i + 1; j < count; j++) {
+            if (students[i].height > students[j].height) {
+                struct Student temp = students[i];
+                students[i] = students[j];
+                students[j] = temp;
+            }
+        }
+    }
+}
+
+void printStudents(struct Student students[], int count) {
+    for (int i = 0; i < count; i++) {
+        printf("%s", students[i].name);
+        if (i < count - 1) {
+            printf(" ");
+        }
+    }
+}
+
+int main() {
+    struct Student roomA[MAX_STUDENTS];
+    struct Student roomB[MAX_STUDENTS];
+    int countA = 0, countB = 0;
+
+    // Input for Room A
+    printf("Room A\n");
+    while (1) {
+        printf("Name : \n");
+        scanf(" %[^\n]", roomA[countA].name);
+        if (strcmp(roomA[countA].name, "-1") == 0) {
+            break;
+        }
+        printf("Height (cm) : \n");
+        scanf("%f", &roomA[countA].height);
+        countA++;
+    }
+
+    // Input for Room B
+    printf("Room B\n");
+    while (1) {
+        printf("Name : \n");
+        scanf(" %[^\n]", roomB[countB].name);
+        if (strcmp(roomB[countB].name, "-1") == 0) {
+            break;
+        }
+        printf("Height (cm) : \n");
+        scanf("%f", &roomB[countB].height);
+        countB++;
+    }
+
+    // Sort students in each room
+    sortStudents(roomA, countA);
+    sortStudents(roomB, countB);
+
+    // Print sorted students in Room A and B
+    printf("Room A -> ");
+    printStudents(roomA, countA);
+    printf("\n");
+    
+    printf("Room B -> ");
+    printStudents(roomB, countB);
+    printf("\n");
+
+    // Combine all students for the school output
+    struct Student school[MAX_STUDENTS];
+    int totalCount = countA + countB;
+
+    for (int i = 0; i < countA; i++) {
+        school[i] = roomA[i];
+    }
+    for (int i = 0; i < countB; i++) {
+        school[countA + i] = roomB[i];
+    }
+
+    // Sort all students in the school
+    sortStudents(school, totalCount);
+
+    // Print school students from tallest to shortest
+    printf("School -> ");
+    for (int i = totalCount - 1; i >= 0; i--) {
+        printf("%s", school[i].name);
+        if (i > 0) {
+            printf(" ");
+        }
+    }
+    printf("\n");
+
+    return 0;
+}
