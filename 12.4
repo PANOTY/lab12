@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Employee {
+    char name[50];
+    int exp;
+    float salary;
+};
+
+int main() {
+    struct Employee employees[100];
+    int count = 0;
+    int x1_count = 0, x1_2_count = 0, x1_4_count = 0, x1_6_count = 0, x1_8_count = 0, x2_count = 0;
+    float min_salary = 0.0, max_salary = 0.0;
+    char min_employee[50], max_employee[50];
+
+    while (1) {
+        printf("Employee %d Name : \n", count + 1);
+        scanf(" %[^\n]", employees[count].name);
+        
+        if (strcmp(employees[count].name, "-1") == 0) {
+            break;
+        }
+
+        printf("EXP : \n");
+        scanf("%d", &employees[count].exp);
+        count++;
+
+        // คำนวณเงินเดือนตามค่า EXP
+        if (employees[count - 1].exp < 1000) {
+            employees[count - 1].salary = employees[count - 1].exp * 1.0;
+            x1_count++;
+        } else if (employees[count - 1].exp < 2000) {
+            employees[count - 1].salary = employees[count - 1].exp * 1.2;
+            x1_2_count++;
+        } else if (employees[count - 1].exp < 3000) {
+            employees[count - 1].salary = employees[count - 1].exp * 1.4;
+            x1_4_count++;
+        } else if (employees[count - 1].exp < 4000) {
+            employees[count - 1].salary = employees[count - 1].exp * 1.6;
+            x1_6_count++;
+        } else if (employees[count - 1].exp < 5000) {
+            employees[count - 1].salary = employees[count - 1].exp * 1.8;
+            x1_8_count++;
+        } else {
+            employees[count - 1].salary = employees[count - 1].exp * 2.0;
+            x2_count++;
+        }
+
+        // หาคนที่ได้เงินเดือนมากที่สุดและน้อยที่สุด
+        if (count == 1 || employees[count - 1].salary > max_salary) {
+            max_salary = employees[count - 1].salary;
+            strcpy(max_employee, employees[count - 1].name);
+        }
+        if (count == 1 || employees[count - 1].salary < min_salary || min_salary == 0.0) {
+            min_salary = employees[count - 1].salary;
+            strcpy(min_employee, employees[count - 1].name);
+        }
+    }
+
+    // แสดงผลลัพธ์
+    printf("**** Salary Result ****\n");
+    printf("x1.0 count %d\n", x1_count);
+    printf("x1.2 count %d\n", x1_2_count);
+    printf("x1.4 count %d\n", x1_4_count);
+    printf("x1.6 count %d\n", x1_6_count);
+    printf("x1.8 count %d\n", x1_8_count);
+    printf("x2.0 count %d\n", x2_count);
+    printf("The Employee get x2.0 is %s\n", max_employee);
+    printf("The Employee get x1.0 is %s\n", min_employee);
+
+    return 0;
+}
